@@ -3,6 +3,9 @@ package ec.com.saviasoft.operaciones.servicio;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +60,15 @@ public class UsuarioServicio {
             throw new MensajeException("Usuario con el username '" + username + "' no encontrado");
         }
         return usuario;
+    }
+    
+    
+    public Usuario buscarPorTrabajador(Long trabajador) throws MensajeException {
+        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        
+        return usuarios.stream().filter(usuarioStream -> usuarioStream.getTrabajador().getId() == trabajador)
+				   .findFirst()
+				   .orElseThrow(() -> new MensajeException("Usuario con el id del trabajador '" + trabajador + "' no encontrado"));
     }
 
 }

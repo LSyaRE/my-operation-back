@@ -35,4 +35,15 @@ public class UsuarioController {
         	throw new MensajeException("Usuario con el username '" + username + "' no encontrado");
         }
     }
-}
+    
+    @GetMapping("/buscar-username-trabajador/{trabajador}")
+    public ResponseEntity<Usuario> buscarPorTrabajador(@PathVariable Long trabajador)throws MensajeException {
+    	try {
+    		Usuario usuario = usuarioServicio.buscarPorTrabajador(trabajador);
+    		return ResponseEntity.ok(usuario);			
+		} catch (Exception e) {
+			return ResponseEntity.ok(new Usuario());
+		}
+        }
+    }
+
